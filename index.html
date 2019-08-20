@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html lang="en-us">
@@ -5,110 +6,104 @@
 <head>
 
   <meta charset="UTF-8">
-  <title>TheCookBook</title>
+  <title>Employee Tracker</title>
 
-  <!-- jQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-  <!-- Bootstrap CDN-->
+  <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
   <!-- Firebase References -->
   <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
 
+  <!-- Moment.js Reference -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+
+  <style>
+    #employee-table th,
+    td {
+      display: inline-block;
+      width: 16.575%;
+    }
+  </style>
 </head>
 
 <body>
 
+  <!-- Employee Tracker -->
   <div class="container">
 
-    <br>
-
-    <!-- Jumbotron Title -->
-    <div class="jumbotron">
-      <h1 class="text-center">The CookBook</h1>
-      <h3 class="text-center">"Your Own Personal Meal Helper"</h3>
+    <!-- Jumbotron -->
+    <div class="jumbotron" style="background-color: black; color: white">
+      <h1 class="text-center">Employee Data Management</h1>
+      <h3 class="text-center">A Comprehensive Directory of Employee Billable Hours</h3>
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
-        <div class="card card-default">
+
+      <div class="col-md-12">
+
+        <!-- Current Employees-->
+        <div class="card mb-4">
+          <div class="card-header">Current Employees</div>
           <div class="card-body">
-            <h3 class="text-center">
-              <strong>Quick & Easy Meals</strong>:If you're not sure what to cook for yourself and family,
-              The Cookbook is here to help!These super easy recipes are here to help you get you and your family fed in
-              30 minutes or less. We have recipes for every craving including rotisseries chicken reuses, sheet
-              pan meals, and amazing comfort foods like Mac and Cheese. </h3>
+            <table class="table table-sm table-hover" id='employee-table'>
+              <thead>
+                <tr>
+                  <th scope="col">Employee Name</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Start Date</th>
+                  <th scope="col">Months Worked</th>
+                  <th scope="col">Monthly Rate ($)</th>
+                  <th scope="col">Total Billed ($)</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Current Product -->
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card card-default">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-4 col-sm-offset-2">
-              <img class="img-fluid thumbnail center-block"
-                src="http://graphitepublications.com/wp-content/uploads/2015/04/5-Coding-Challenges-to-Help-You-Train-Your-Brain.jpg"
-                alt="Coding Brain">
-            </div>
-            <div class="col-sm-6">
-              <h3 class="">
-                <strong>Highest Bidder:</strong>
-                <span id="highest-bidder"></span>
-              </h3>
-              <h3 class="">
-                <strong>Current Price:</strong>
-                <span id="highest-price"></span>
-              </h3>
-              <hr>
-              <h3 class="">Hurry!
-                <strong>
-                  <span id="connected-viewers"></span>
-                </strong> people have their eyes on the prize.</h3>
-            </div>
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Add Employee  -->
+        <div class="card mb-4">
+          <div class="card-header">Add Employee</div>
+          <div class="card-body">
+
+            <!-- Entry Form -->
+            <form>
+              <div class="form-group">
+                <label for="employee-name-input">Employee Name</label>
+                <input class="form-control" id="employee-name-input" placeholder="Jane Doe" type="text">
+              </div>
+              <div class="form-group">
+                <label for="role-input">Role</label>
+                <input class="form-control" id="role-input" placeholder="CEO" type="text">
+              </div>
+              <div class="form-group">
+                <label for="start-input">Start Date (MM/DD/YYYY)</label>
+                <input class="form-control" id="start-input" placeholder="01/08/1989" type="text">
+              </div>
+              <div class="form-group">
+                <label for="rate-input">Monthly Rate</label>
+                <input class="form-control" id="rate-input" placeholder="200000" type="text">
+              </div>
+              <button class="btn btn-primary float-right" id="add-employee-btn">Submit</button>
+            </form>
+
           </div>
         </div>
       </div>
     </div>
-  </div>
-  </div>
-
-  <!-- Make Your Bid -->
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card card-default">
-        <div class="card-header">
-          Make Your Bid
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="form-group row">
-              <label for="bidder-name">Your Name</label>
-              <input class="form-control" id="bidder-name" type="text">
-            </div>
-            <div class="form-group row">
-              <label for="bidder-price">Your Price</label>
-              <input class="form-control" id="bidder-price" type="number">
-            </div>
-            <button class="btn btn-primary" id="submit-bid" type="submit">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
 
   </div>
 
-  <!-- Script -->
-  <script src="assets/javascript/logic.js"></script>
+  <!-- JavaScript -->
+  <script src="timesheetLogic.js"></script>
 
 </body>
 
